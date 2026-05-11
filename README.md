@@ -18,10 +18,6 @@ It does **not** writeback. You maintain commentary in Excel / SharePoint / Datav
 | 2026-01-31 | Margin | Margin improved on freight savings | Carrier negotiation | Supply Chain | Lock 2026 rates | Closed | Low |
 | 2026-02-28 | DSO | DSO worsened by 5 days | Two large invoices stuck | A/R Lead | Escalate to collections | In Progress | Medium |
 
-## Screenshots
-
-> _Placeholder — drop screenshots into `assets/screenshots/` before publishing._
-
 ## Data fields
 
 | Role | Kind | Notes |
