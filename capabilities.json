@@ -1,0 +1,111 @@
+{
+  "dataRoles": [
+    { "displayName": "Event Date", "name": "eventDate", "kind": "Grouping" },
+    { "displayName": "KPI Name", "name": "kpiName", "kind": "Grouping" },
+    { "displayName": "Comment", "name": "commentText", "kind": "Grouping" },
+    { "displayName": "Root Cause", "name": "rootCause", "kind": "Grouping" },
+    { "displayName": "Owner", "name": "owner", "kind": "Grouping" },
+    { "displayName": "Action", "name": "actionText", "kind": "Grouping" },
+    { "displayName": "Status", "name": "status", "kind": "Grouping" },
+    { "displayName": "Severity", "name": "severity", "kind": "Grouping" },
+    { "displayName": "Current Value", "name": "currentValue", "kind": "Measure" },
+    { "displayName": "Previous Value", "name": "previousValue", "kind": "Measure" },
+    { "displayName": "Variance Value", "name": "varianceValue", "kind": "Measure" },
+    { "displayName": "Variance Percent", "name": "variancePercent", "kind": "Measure" },
+    { "displayName": "Sort Order", "name": "sortOrder", "kind": "Measure" }
+  ],
+  "dataViewMappings": [
+    {
+      "table": {
+        "rows": {
+          "select": [
+            { "for": { "in": "eventDate" } },
+            { "for": { "in": "kpiName" } },
+            { "for": { "in": "commentText" } },
+            { "for": { "in": "rootCause" } },
+            { "for": { "in": "owner" } },
+            { "for": { "in": "actionText" } },
+            { "for": { "in": "status" } },
+            { "for": { "in": "severity" } },
+            { "for": { "in": "currentValue" } },
+            { "for": { "in": "previousValue" } },
+            { "for": { "in": "varianceValue" } },
+            { "for": { "in": "variancePercent" } },
+            { "for": { "in": "sortOrder" } }
+          ],
+          "dataReductionAlgorithm": { "top": { "count": 500 } }
+        }
+      }
+    }
+  ],
+  "objects": {
+    "display": {
+      "properties": {
+        "titleText": { "type": { "text": true } },
+        "timelineLayout": {
+          "type": { "enumeration": [
+            { "value": "vertical", "displayName": "Vertical" },
+            { "value": "compact", "displayName": "Compact list" },
+            { "value": "executive", "displayName": "Executive cards" }
+          ] }
+        },
+        "maxItems": { "type": { "numeric": true } },
+        "sortOrder": {
+          "type": { "enumeration": [
+            { "value": "newest", "displayName": "Newest first" },
+            { "value": "oldest", "displayName": "Oldest first" }
+          ] }
+        },
+        "showKpiSummary": { "type": { "bool": true } },
+        "showRootCause": { "type": { "bool": true } },
+        "showOwner": { "type": { "bool": true } },
+        "showAction": { "type": { "bool": true } },
+        "showSeverity": { "type": { "bool": true } },
+        "showStatus": { "type": { "bool": true } },
+        "compactMode": { "type": { "bool": true } }
+      }
+    },
+    "formatting": {
+      "properties": {
+        "dateFormat": {
+          "type": { "enumeration": [
+            { "value": "iso", "displayName": "YYYY-MM-DD" },
+            { "value": "long", "displayName": "DD MMM YYYY" },
+            { "value": "short", "displayName": "DD/MM/YYYY" },
+            { "value": "month", "displayName": "MMM YYYY" }
+          ] }
+        },
+        "numberFormat": {
+          "type": { "enumeration": [
+            { "value": "auto", "displayName": "Auto" },
+            { "value": "currency", "displayName": "Currency" },
+            { "value": "percentage", "displayName": "Percentage" },
+            { "value": "decimal", "displayName": "Decimal" },
+            { "value": "whole", "displayName": "Whole number" }
+          ] }
+        },
+        "decimalPlaces": { "type": { "numeric": true } },
+        "currencySymbol": { "type": { "text": true } }
+      }
+    },
+    "colors": {
+      "properties": {
+        "backgroundColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "textColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "timelineLineColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "openColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "inProgressColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "closedColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "blockedColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "lowColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "mediumColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "highColor": { "type": { "fill": { "solid": { "color": true } } } },
+        "criticalColor": { "type": { "fill": { "solid": { "color": true } } } }
+      }
+    }
+  },
+  "supportsHighlight": false,
+  "supportsLandingPage": true,
+  "supportsKeyboardFocus": true,
+  "privileges": []
+}

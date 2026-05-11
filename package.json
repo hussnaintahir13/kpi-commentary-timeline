@@ -1,0 +1,24 @@
+{
+  "name": "kpi-commentary-timeline",
+  "version": "1.0.0",
+  "description": "KPI Commentary Timeline — a Power BI custom visual that renders timestamped commentary, root causes, owners, actions and severity/status badges alongside KPI movement.",
+  "keywords": ["powerbi", "powerbi-visuals", "commentary", "timeline", "kpi"],
+  "scripts": {
+    "pbiviz": "pbiviz",
+    "start": "pbiviz start",
+    "package": "pbiviz package",
+    "lint": "tsc --noEmit"
+  },
+  "author": { "name": "Syed Hussnain", "email": "maintainers@example.com" },
+  "license": "MIT",
+  "dependencies": {
+    "powerbi-visuals-api": "~5.11.0",
+    "powerbi-visuals-utils-formattingmodel": "6.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "less": "^4.2.0",
+    "powerbi-visuals-tools": "~5.5.1",
+    "typescript": "^5.4.0"
+  }
+}
