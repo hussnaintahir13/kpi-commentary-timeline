@@ -10,7 +10,11 @@
     "gitHubUrl": "https://github.com/hussnaintahir13/kpi-commentary-timeline"
   },
   "apiVersion": "5.11.0",
-  "author": { "name": "Syed Hussnain", "email": "maintainers@example.com" },
+  "author": {
+    "name": "Syed Hussnain Tahir Sherazi",
+    "email": "Contact@syedhussnain.com",
+    "url": "https://www.syedhussnain.com"
+  },
   "assets": { "icon": "assets/icon.png" },
   "externalJS": [],
   "style": "style/visual.less",
