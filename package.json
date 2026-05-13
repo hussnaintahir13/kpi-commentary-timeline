@@ -9,7 +9,11 @@
     "package": "pbiviz package",
     "lint": "tsc --noEmit"
   },
-  "author": { "name": "Syed Hussnain", "email": "maintainers@example.com" },
+  "author": {
+    "name": "Syed Hussnain Tahir Sherazi",
+    "email": "Contact@syedhussnain.com",
+    "url": "https://www.syedhussnain.com"
+  },
   "license": "MIT",
   "dependencies": {
     "powerbi-visuals-api": "~5.11.0",
