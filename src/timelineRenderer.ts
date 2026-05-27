@@ -39,7 +39,7 @@ export function severityColor(sev: SeverityLevel, c: ColorScheme): string {
 }
 
 export function renderTimeline(root: HTMLElement, events: TimelineEvent[], summary: KpiSummary | undefined, opts: RenderOptions): void {
-    root.innerHTML = "";
+    while (root.firstChild) root.removeChild(root.firstChild);
     root.style.background = opts.colors.background;
     root.style.color = opts.colors.text;
     root.style.setProperty("--kct-line", opts.colors.line);
@@ -73,7 +73,12 @@ function renderEmpty(root: HTMLElement): void {
     const wrap = document.createElement("div");
     wrap.className = "kct-empty";
     wrap.setAttribute("role", "status");
-    wrap.innerHTML = `<h3>No commentary available</h3><p>No commentary available for the selected context. Bind Event Date, KPI Name and Comment fields, or adjust your filters.</p>`;
+    const h = document.createElement("h3");
+    h.textContent = "No commentary available";
+    wrap.appendChild(h);
+    const p = document.createElement("p");
+    p.textContent = "No commentary available for the selected context. Bind Event Date, KPI Name and Comment fields, or adjust your filters.";
+    wrap.appendChild(p);
     root.appendChild(wrap);
 }
 

@@ -2,6 +2,10 @@
 
 A Power BI custom visual that renders timestamped commentary — comments, root causes, owners, actions, severity and status — alongside KPI movement, in a vertical, compact-list, or executive-card layout.
 
+## Quick install (no build required)
+
+Grab the latest `.pbiviz` from [`release/`](release/) (use **Download raw file** in GitHub) and import via **Visualizations → … → Import a visual from a file** in Power BI Desktop. Full steps in [`release/README.md`](release/README.md).
+
 ## Why commentary timelines matter
 
 Numbers explain *what*. Commentary explains *why*. Finance close packs, operations stand-ups, PMO updates, compliance logs and exec reviews all rely on durable, dated narrative captured next to the KPI. This visual surfaces that context on the same page as the number.

@@ -21,6 +21,11 @@
   },
   "devDependencies": {
     "@types/node": "^20.11.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.57.2",
+    "eslint": "^9.0.0",
+    "eslint-plugin-powerbi-visuals": "^1.1.1",
+    "globals": "^17.4.0",
     "less": "^4.2.0",
     "powerbi-visuals-tools": "~5.5.1",
     "typescript": "^5.4.0"

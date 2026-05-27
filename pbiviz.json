@@ -4,7 +4,7 @@
     "displayName": "KPI Commentary Timeline",
     "guid": "kpiCommentaryTimeline3E1B27A45F0C4FE9AC8B2D617F8E91D5",
     "visualClassName": "Visual",
-    "version": "1.0.0",
+    "version": "1.0.0.0",
     "description": "Display timestamped commentary, root causes, actions and owners alongside KPI movement in a vertical, compact or executive timeline.",
     "supportUrl": "https://github.com/hussnaintahir13/kpi-commentary-timeline/issues",
     "gitHubUrl": "https://github.com/hussnaintahir13/kpi-commentary-timeline"

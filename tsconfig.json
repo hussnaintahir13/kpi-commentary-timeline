@@ -11,9 +11,11 @@
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
+    "skipLibCheck": true,
     "sourceMap": true,
     "lib": ["es2015", "es2016", "es2017", "dom", "es2017.object"],
     "outDir": ".tmp/build"
   },
+  "files": ["src/visual.ts"],
   "include": ["src/**/*.ts"]
 }

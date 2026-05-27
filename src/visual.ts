@@ -17,7 +17,10 @@ export class Visual implements IVisual {
     private settings: VisualSettings = new VisualSettings();
     private formattingSettingsService: FormattingSettingsService;
 
-    constructor(options: VisualConstructorOptions) {
+    constructor(options?: VisualConstructorOptions) {
+        if (!options) {
+            throw new Error("KPI Commentary Timeline: VisualConstructorOptions are required.");
+        }
         this.root = options.element;
         this.root.classList.add("kct-root");
         this.formattingSettingsService = new FormattingSettingsService();
