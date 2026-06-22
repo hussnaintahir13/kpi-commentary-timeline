@@ -2,6 +2,14 @@ import { DateFormat, FormatOptions, NumberFormat, SeverityLevel, StatusLevel } f
 
 const MONTHS_SHORT = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
+// Clamp decimal places into the range accepted by toFixed/toLocaleString (0–10 per visual settings)
+// to avoid a RangeError if a user-set value ever falls outside the allowed bounds.
+function clampDecimals(decimals: number): number {
+    const dp = Math.floor(Number(decimals));
+    if (!isFinite(dp)) return 0;
+    return Math.max(0, Math.min(10, dp));
+}
+
 export function formatDate(date: Date | undefined, raw: string | undefined, format: DateFormat): string {
     if (!date || isNaN(date.getTime())) return raw || "—";
     const d = date.getDate().toString().padStart(2, "0");
@@ -29,21 +37,23 @@ export function formatValue(value: number | undefined, format: NumberFormat, cur
 }
 
 function formatAuto(value: number, decimals: number): string {
+    const dp = clampDecimals(decimals);
     const abs = Math.abs(value);
-    if (abs >= 1_000_000_000) return `${(value / 1_000_000_000).toFixed(decimals)}B`;
-    if (abs >= 1_000_000)     return `${(value / 1_000_000).toFixed(decimals)}M`;
-    if (abs >= 1_000)         return `${(value / 1_000).toFixed(decimals)}K`;
-    return formatNumber(value, decimals);
+    if (abs >= 1_000_000_000) return `${(value / 1_000_000_000).toFixed(dp)}B`;
+    if (abs >= 1_000_000)     return `${(value / 1_000_000).toFixed(dp)}M`;
+    if (abs >= 1_000)         return `${(value / 1_000).toFixed(dp)}K`;
+    return formatNumber(value, dp);
 }
 
 function formatNumber(value: number, decimals: number): string {
-    return value.toLocaleString(undefined, { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+    const dp = clampDecimals(decimals);
+    return value.toLocaleString(undefined, { minimumFractionDigits: dp, maximumFractionDigits: dp });
 }
 
 export function formatPercent(value: number | undefined, decimals = 1): string {
     if (value === undefined || value === null || !isFinite(value)) return "—";
     const sign = value > 0 ? "+" : "";
-    return `${sign}${value.toFixed(decimals)}%`;
+    return `${sign}${value.toFixed(clampDecimals(decimals))}%`;
 }
 
 export function normalizeStatus(raw: string | undefined): StatusLevel {

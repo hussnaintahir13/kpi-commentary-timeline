@@ -37,6 +37,12 @@ export class Visual implements IVisual {
 
         const model = extractModel(dataView, sort, maxItems);
 
+        // The user's Compact toggle is authoritative for their intent. Auto-narrow is an
+        // internal layout-sizing signal for very small tiles, kept separate so turning the
+        // toggle OFF is respected even on narrow viewports.
+        const userCompact = display.compactMode.value;
+        const autoNarrow = options.viewport.width < 360;
+
         const opts: RenderOptions = {
             layout,
             showKpiSummary: display.showKpiSummary.value,
@@ -45,7 +51,8 @@ export class Visual implements IVisual {
             showAction: display.showAction.value,
             showSeverity: display.showSeverity.value,
             showStatus: display.showStatus.value,
-            compactMode: display.compactMode.value || options.viewport.width < 360,
+            compactMode: userCompact,
+            autoNarrow: autoNarrow,
             colors: this.colors(),
             format: buildFormatOptions(
                 (this.settings.formatting.dateFormat.value.value as DateFormat) || "long",

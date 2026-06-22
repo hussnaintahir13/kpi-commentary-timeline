@@ -16,11 +16,37 @@ const safeString = (v: powerbi.PrimitiveValue | undefined | null): string | unde
     return s.length === 0 ? undefined : s;
 };
 
+const isValidDate = (d: Date): boolean => !isNaN(d.getTime());
+
 const safeDate = (v: powerbi.PrimitiveValue | undefined | null): Date | undefined => {
     if (v === undefined || v === null) return undefined;
     if (v instanceof Date) return v;
-    const parsed = new Date(String(v));
-    return isNaN(parsed.getTime()) ? undefined : parsed;
+
+    const s = String(v).trim();
+    if (s.length === 0) return undefined;
+
+    // ISO date (YYYY-MM-DD), optionally with a time component — parse the date part as UTC-safe local.
+    const iso = /^(\d{4})-(\d{2})-(\d{2})/.exec(s);
+    if (iso) {
+        const d = new Date(Number(iso[1]), Number(iso[2]) - 1, Number(iso[3]));
+        if (isValidDate(d)) return d;
+    }
+
+    // Explicit DD/MM/YYYY (UK format) — also tolerate '-' or '.' separators.
+    const dmy = /^(\d{1,2})[\/.\-](\d{1,2})[\/.\-](\d{4})$/.exec(s);
+    if (dmy) {
+        const day = Number(dmy[1]);
+        const month = Number(dmy[2]);
+        const year = Number(dmy[3]);
+        if (month >= 1 && month <= 12 && day >= 1 && day <= 31) {
+            const d = new Date(year, month - 1, day);
+            if (isValidDate(d)) return d;
+        }
+    }
+
+    // Fallback: let the runtime attempt to parse anything else.
+    const parsed = new Date(s);
+    return isValidDate(parsed) ? parsed : undefined;
 };
 
 interface ColumnIndex {
@@ -133,11 +159,17 @@ function buildSummary(events: TimelineEvent[]): KpiSummary | undefined {
         e.variancePercent !== undefined
     );
     if (!first) return undefined;
+    // When multiple distinct KPIs are bound, the summary reflects whichever event sorts
+    // first; flag it so the renderer can make clear WHICH KPI the figures belong to.
+    const distinctKpis = new Set(
+        events.map(e => e.kpiName).filter((n): n is string => n !== undefined && n.length > 0)
+    );
     return {
         kpiName: first.kpiName,
         currentValue: first.currentValue,
         previousValue: first.previousValue,
         varianceValue: first.varianceValue,
-        variancePercent: first.variancePercent
+        variancePercent: first.variancePercent,
+        multipleKpis: distinctKpis.size > 1
     };
 }

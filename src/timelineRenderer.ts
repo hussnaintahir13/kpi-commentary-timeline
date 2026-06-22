@@ -10,6 +10,7 @@ export interface RenderOptions {
     showSeverity: boolean;
     showStatus: boolean;
     compactMode: boolean;
+    autoNarrow: boolean;
     colors: ColorScheme;
     format: FormatOptions;
     title: string;
@@ -44,6 +45,7 @@ export function renderTimeline(root: HTMLElement, events: TimelineEvent[], summa
     root.style.color = opts.colors.text;
     root.style.setProperty("--kct-line", opts.colors.line);
     root.classList.toggle("compact", opts.compactMode);
+    root.classList.toggle("narrow", opts.autoNarrow);
     root.dataset.layout = opts.layout;
 
     const header = document.createElement("h2");
@@ -83,10 +85,30 @@ function renderEmpty(root: HTMLElement): void {
 }
 
 function renderSummary(s: KpiSummary, opts: RenderOptions): HTMLElement {
+    const section = document.createElement("section");
+    section.className = "kct-summary-section";
+    section.setAttribute("role", "group");
+    section.setAttribute("aria-label", s.kpiName ? `KPI summary: ${s.kpiName}` : "KPI summary");
+
+    // Make clear WHICH KPI these figures belong to — prominent when multiple KPIs are bound.
+    if (s.kpiName) {
+        const caption = document.createElement("div");
+        caption.className = "kct-summary-kpi";
+        const name = document.createElement("span");
+        name.className = "kct-summary-kpi-name";
+        name.textContent = s.kpiName;
+        caption.appendChild(name);
+        if (s.multipleKpis) {
+            const note = document.createElement("span");
+            note.className = "kct-summary-kpi-note";
+            note.textContent = "summary for this KPI";
+            caption.appendChild(note);
+        }
+        section.appendChild(caption);
+    }
+
     const wrap = document.createElement("div");
     wrap.className = "kct-summary";
-    wrap.setAttribute("role", "group");
-    wrap.setAttribute("aria-label", "KPI summary");
 
     const add = (label: string, value: string | undefined, tone?: string): void => {
         if (value === undefined || value === "—") return;
@@ -99,7 +121,6 @@ function renderSummary(s: KpiSummary, opts: RenderOptions): HTMLElement {
         wrap.appendChild(item);
     };
 
-    if (s.kpiName) add("KPI", s.kpiName);
     add("Current", formatValue(s.currentValue, opts.format.numberFormat, opts.format.currencySymbol, opts.format.decimalPlaces));
     add("Previous", formatValue(s.previousValue, opts.format.numberFormat, opts.format.currencySymbol, opts.format.decimalPlaces));
     const varianceTone = s.varianceValue !== undefined
@@ -107,7 +128,8 @@ function renderSummary(s: KpiSummary, opts: RenderOptions): HTMLElement {
         : undefined;
     add("Variance", formatValue(s.varianceValue, opts.format.numberFormat, opts.format.currencySymbol, opts.format.decimalPlaces), varianceTone);
     add("Variance %", formatPercent(s.variancePercent), varianceTone);
-    return wrap;
+    section.appendChild(wrap);
+    return section;
 }
 
 function renderVertical(events: TimelineEvent[], opts: RenderOptions): HTMLElement {

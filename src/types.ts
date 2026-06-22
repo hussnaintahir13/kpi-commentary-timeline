@@ -30,6 +30,7 @@ export interface KpiSummary {
     previousValue?: number;
     varianceValue?: number;
     variancePercent?: number;
+    multipleKpis?: boolean;
 }
 
 export interface TimelineModel {

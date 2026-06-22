@@ -1,5 +1,8 @@
 # KPI Commentary Timeline
 
+## Quick start (non-technical)
+New here? Read **[HOW-TO-USE.md](HOW-TO-USE.md)** for a plain-English guide to importing and using this visual.
+
 A Power BI custom visual that renders timestamped commentary — comments, root causes, owners, actions, severity and status — alongside KPI movement, in a vertical, compact-list, or executive-card layout.
 
 ## Quick install (no build required)

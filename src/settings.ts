@@ -1,5 +1,7 @@
+import powerbi from "powerbi-visuals-api";
 import { formattingSettings } from "powerbi-visuals-utils-formattingmodel";
 
+import ValidatorType = powerbi.visuals.ValidatorType;
 import FormattingSettingsCard = formattingSettings.SimpleCard;
 import FormattingSettingsModel = formattingSettings.Model;
 import FormattingSettingsSlice = formattingSettings.Slice;
@@ -18,7 +20,10 @@ class DisplayCard extends FormattingSettingsCard {
         ],
         value: { value: "vertical", displayName: "Vertical" }
     });
-    maxItems = new formattingSettings.NumUpDown({ name: "maxItems", displayName: "Max items", value: 50 });
+    maxItems = new formattingSettings.NumUpDown({
+        name: "maxItems", displayName: "Max items", value: 50,
+        options: { minValue: { value: 1, type: ValidatorType.Min } }
+    });
     sortOrder = new formattingSettings.ItemDropdown({
         name: "sortOrder", displayName: "Sort order",
         items: [
@@ -66,7 +71,13 @@ class FormattingCard extends FormattingSettingsCard {
         ],
         value: { value: "auto", displayName: "Auto" }
     });
-    decimalPlaces = new formattingSettings.NumUpDown({ name: "decimalPlaces", displayName: "Decimal places", value: 1 });
+    decimalPlaces = new formattingSettings.NumUpDown({
+        name: "decimalPlaces", displayName: "Decimal places", value: 1,
+        options: {
+            minValue: { value: 0, type: ValidatorType.Min },
+            maxValue: { value: 10, type: ValidatorType.Max }
+        }
+    });
     currencySymbol = new formattingSettings.TextInput({ name: "currencySymbol", displayName: "Currency symbol", value: "£", placeholder: "£" });
 
     slices: FormattingSettingsSlice[] = [this.dateFormat, this.numberFormat, this.decimalPlaces, this.currencySymbol];
